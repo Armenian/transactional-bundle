@@ -1,0 +1,32 @@
+{
+    "name": "dmp/transactional-bundle",
+    "description": "Bundle for support of Transactional AOP annotation",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.1",
+        "dmp/aop-bundle": "^0.1",
+        "dmp/cg-lib": "^0.1",
+        "doctrine/orm": "^2.13.2",
+        "doctrine/annotations": "^1.13"
+    },
+    "require-dev": {
+        "matthiasnoback/symfony-dependency-injection-test": "^4.3",
+        "phpunit/phpunit": "^9.5",
+        "symfony/http-kernel": "^5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "DMP\\TransactionalBundle\\":  "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DMP\\TransactionalBundle\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "test-cc": "phpunit coverage-html report/"
+    }
+}

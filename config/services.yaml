@@ -1,0 +1,9 @@
+services:
+  DMP\TransactionalBundle\Aop\TransactionalPointcut:
+    public: true
+    autowire: true
+    tags:
+      - { name: jms_aop.pointcut, interceptor: DMP\TransactionalBundle\Aop\TransactionalInterceptor}
+  DMP\TransactionalBundle\Aop\TransactionalInterceptor:
+    public: true
+    autowire: true
