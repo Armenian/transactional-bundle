@@ -1,6 +1,6 @@
 <?php
-declare(strict_types=1);
 
+declare(strict_types=1);
 
 namespace DMP\TransactionalBundle\Aop;
 
@@ -10,18 +10,11 @@ use DMP\AopBundle\Aop\PointcutInterface;
 use ReflectionClass;
 use ReflectionMethod;
 
-class TransactionalPointcut implements PointcutInterface
+final class TransactionalPointcut implements PointcutInterface
 {
-    private Reader $reader;
-
-    /**
-     * TransactionalPointcut constructor.
-     * @param Reader $reader
-     */
-    public function __construct(Reader $reader)
-    {
-        $this->reader = $reader;
-    }
+    public function __construct(
+        private readonly Reader $reader)
+    {}
 
 
     public function matchesClass(ReflectionClass $class): bool

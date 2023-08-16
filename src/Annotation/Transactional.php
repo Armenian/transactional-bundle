@@ -6,6 +6,7 @@ namespace DMP\TransactionalBundle\Annotation;
 
 /**
  * @Annotation
+ * @Target({"METHOD", "CLASS"})
  */
 class Transactional
 {

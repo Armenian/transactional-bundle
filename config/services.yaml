@@ -7,3 +7,6 @@ services:
   DMP\TransactionalBundle\Aop\TransactionalInterceptor:
     public: true
     autowire: true
+  DMP\TransactionalBundle\Doctrine\OrmTransactionManager:
+    public: true
+    autowire: true
