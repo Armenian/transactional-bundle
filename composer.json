@@ -12,8 +12,8 @@
     },
     "require-dev": {
         "matthiasnoback/symfony-dependency-injection-test": "^4.3",
-        "phpunit/phpunit": "^9.5",
-        "symfony/http-kernel": "^5.4"
+        "phpunit/phpunit": "^9.5 || ^10.1",
+        "symfony/http-kernel": "^5.4 || ^6.2"
     },
     "autoload": {
         "psr-4": {
