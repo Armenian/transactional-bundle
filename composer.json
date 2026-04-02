@@ -4,11 +4,10 @@
     "type": "symfony-bundle",
     "license": "MIT",
     "require": {
-        "php": ">=8.1",
+        "php": "^8.4",
         "dmp/aop-bundle": "^1.0.0",
         "dmp/cg-lib": "^0.1.1",
-        "doctrine/orm": "^2.13.2",
-        "doctrine/annotations": "^1.13"
+        "doctrine/orm": "^3.6"
     },
     "require-dev": {
         "matthiasnoback/symfony-dependency-injection-test": "^4.3",

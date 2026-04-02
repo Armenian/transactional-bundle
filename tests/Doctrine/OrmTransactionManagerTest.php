@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace DMP\TransactionalBundle\Tests\Doctrine;
 
 use DMP\TransactionalBundle\Doctrine\OrmTransactionManager;
-use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -14,16 +13,13 @@ use Throwable;
 
 final class OrmTransactionManagerTest extends TestCase
 {
-    private EntityManagerInterface|MockObject $em;
-
-    private Connection|MockObject $connection;
-
+    private EntityManagerInterface&MockObject $em;
+    private Connection&MockObject $connection;
     private OrmTransactionManager $manager;
 
     protected function setUp(): void
     {
         $this->connection = $this->createMock(Connection::class);
-        $this->eventManager = $this->createMock(EventManager::class);
         $this->em = $this->createMock(EntityManagerInterface::class);
         $this->em
             ->method('getConnection')

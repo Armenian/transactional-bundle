@@ -11,30 +11,26 @@ use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 use RuntimeException;
 use Throwable;
-use function var_dump;
 
 class TransactionalInterceptorTest extends TestCase
 {
-    private const RETURN_VALUE = 42;
+    private const int RETURN_VALUE = 42;
 
     private TransactionalInterceptor $interceptor;
-    private TransactionManager|MockObject $transactionManager;
-    private MethodInvocation|MockObject $invocation;
+    private TransactionManager&MockObject $transactionManager;
+    private MethodInvocation&MockObject $invocation;
 
     protected function setUp(): void
     {
         $this->transactionManager = $this->createMock(TransactionManager::class);
         $this->invocation = $this->createMock(MethodInvocation::class);
-        $this->connection = $this->createMock(Connection::class);
+        $connection = $this->createMock(Connection::class);
         $em = $this->createMock(EntityManagerInterface::class);
 
-        $em->method('getConnection')->willReturn($this->connection);
-        $this->transactionManager->method('getEntityManager')->willReturn(
-            $em
-        );
+        $em->method('getConnection')->willReturn($connection);
+        $this->transactionManager->method('getEntityManager')->willReturn($em);
 
         $this->interceptor = new TransactionalInterceptor($this->transactionManager);
     }
