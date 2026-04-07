@@ -6,8 +6,6 @@ namespace DMP\TransactionalBundle\Tests\Aop\Transactional;
 
 use DMP\TransactionalBundle\Annotation\Transactional;
 use DMP\TransactionalBundle\Aop\TransactionalPointcut;
-use Doctrine\Common\Annotations\Reader;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionMethod;
@@ -16,43 +14,50 @@ class TransactionalPointcutTest extends TestCase
 {
 
     private TransactionalPointcut $pointcut;
-    private Reader|MockObject $reader;
 
     protected function setUp(): void
     {
-        $this->reader = $this->createMock(Reader::class);
-        $this->pointcut = new TransactionalPointcut($this->reader);
+        $this->pointcut = new TransactionalPointcut();
     }
 
     public function testMatchesClass(): void
     {
-        $reflectionClass = $this->createMock(ReflectionClass::class);
+        $reflectionClass = new ReflectionClass(self::class);
         $this->assertTrue($this->pointcut->matchesClass($reflectionClass));
     }
 
     public function testMatchesMethodTrue(): void
     {
-        $annotation = $this->createMock(Transactional::class);
-        $reflectionMethod = $this->createMock(ReflectionMethod::class);
-        $this->reader->expects(self::once())
-            ->method('getMethodAnnotation')
-            ->with($reflectionMethod, Transactional::class)
-            ->willReturn($annotation);
-
+        $reflectionMethod = new ReflectionMethod($this, 'methodWithAttribute');
         $this->assertTrue($this->pointcut->matchesMethod($reflectionMethod));
     }
 
+    public function testMatchesMethodOnClassTrue(): void
+    {
+        $reflectionMethod = new ReflectionMethod(ClassWithAttribute::class, 'methodWithoutAttribute');
+        $this->assertTrue($this->pointcut->matchesMethod($reflectionMethod));
+    }
 
     public function testMatchesMethodFalse(): void
     {
-        $reflectionMethod = $this->createMock(ReflectionMethod::class);
-        $this->reader->expects(self::once())
-            ->method('getMethodAnnotation')
-            ->with($reflectionMethod, Transactional::class)
-            ->willReturn(null);
-
+        $reflectionMethod = new ReflectionMethod($this, 'methodWithoutAttribute');
         $this->assertFalse($this->pointcut->matchesMethod($reflectionMethod));
     }
 
+    #[Transactional]
+    public function methodWithAttribute(): void
+    {
+    }
 
+    public function methodWithoutAttribute(): void
+    {
+    }
+}
+
+#[Transactional]
+class ClassWithAttribute
+{
+    public function methodWithoutAttribute(): void
+    {
+    }
 }
